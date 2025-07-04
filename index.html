@@ -4,120 +4,210 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Clusterização Hierárquica - Maranhão</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&display=swap');
 
     :root {
-      --blue: #4e73df;
-      --gray-dark: #5a5c69;
-      --gray: #858796;
-      --white: #fff;
-      --light: #f8f9fc;
-      --font-family-sans-serif: 'Nunito', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --primary: #2c3e50;
+      --secondary: #3498db;
+      --accent: #e74c3c;
+      --light: #ecf0f1;
+      --dark: #2c3e50;
+      --gray: #95a5a6;
+      --font-main: 'Nunito Sans', sans-serif;
     }
 
     * {
       box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
     body {
-      margin: 0;
+      font-family: var(--font-main);
+      color: var(--dark);
       background-color: var(--light);
-      font-family: var(--font-family-sans-serif);
-      color: var(--gray-dark);
-      line-height: 1.6;
+      line-height: 1.8;
       min-height: 100vh;
-      padding: 20px;
+      padding: 0;
       max-width: 1200px;
-      margin-left: auto;
-      margin-right: auto;
+      margin: 0 auto;
     }
 
     header {
+      padding: 3rem 2rem;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      margin-bottom: 2rem;
+      border-radius: 0 0 20px 20px;
       text-align: center;
-      margin-bottom: 40px;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    /* Texto do header */
+    header .header-text {
+      flex: 1 1 60%;
+      text-align: left;
     }
 
     header h1 {
       font-size: 2.8rem;
-      color: var(--blue);
-      margin-bottom: 0.25rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
     }
 
-    header p {
+    header .subtitle {
       font-size: 1.15rem;
-      color: var(--gray);
-      margin-top: 0;
       max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
+      opacity: 0.9;
+    }
+
+    header .stats {
+      display: flex;
+      justify-content: flex-start;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+    }
+
+    .stat-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      background: rgba(255,255,255,0.1);
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+    }
+
+    /* Imagem Maranhão */
+    .header-image {
+      flex: 0 0 35%;
+      max-width: 350px;
+      opacity: 0.7;
+      user-select: none;
+      pointer-events: none;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .header-image img {
+      width: 100%;
+      height: auto;
+      transform: scale(1.1);
+      transform-origin: center right;
+      display: block;
+    }
+
+    main {
+      padding: 0 20px;
     }
 
     section.step {
-      background: var(--white);
-      padding: 20px 30px;
+      background: white;
+      padding: 25px 30px;
       border-radius: 8px;
-      box-shadow: 0 4px 12px rgb(78 115 223 / 0.15);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
       margin-bottom: 30px;
+      border-left: 4px solid var(--secondary);
+      transition: all 0.3s ease;
+    }
+
+    section.step:hover {
+      transform: translateX(5px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.1);
     }
 
     section.step h2 {
-      color: var(--blue);
+      color: var(--primary);
       margin-top: 0;
       font-size: 1.6rem;
-      margin-bottom: 12px;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    section.step h2 i {
+      color: var(--secondary);
     }
 
     section.step p {
       font-size: 1rem;
-      color: var(--gray-dark);
-      margin-bottom: 10px;
+      color: var(--dark);
+      margin-bottom: 15px;
+      line-height: 1.7;
     }
 
     .dendrograms {
       display: flex;
-      justify-content: space-between;
+      justify-content: center;
       gap: 30px;
       flex-wrap: wrap;
       margin-top: 40px;
     }
 
     .dendrogram-card {
-      background: var(--white);
+      background: white;
       border-radius: 8px;
-      box-shadow: 0 2px 8px rgb(78 115 223 / 0.15);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
       flex: 1 1 30%;
       min-width: 350px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 20px;
+      padding: 25px;
       cursor: pointer;
-      transition: transform 0.2s;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
     }
 
     .dendrogram-card:hover {
-      transform: scale(1.02);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+    }
+
+    .dendrogram-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
     }
 
     .dendrogram-card img {
       width: 100%;
       height: auto;
       border-radius: 5px;
-      margin-bottom: 15px;
-      box-shadow: 0 2px 6px rgb(0 0 0 / 0.1);
+      margin-bottom: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: transform 0.3s;
+    }
+
+    .dendrogram-card:hover img {
+      transform: scale(1.02);
     }
 
     .dendrogram-card h3 {
       margin: 0 0 10px 0;
       font-size: 1.4rem;
-      color: var(--blue);
+      color: var(--primary);
       text-align: center;
     }
 
     .dendrogram-card p {
       color: var(--gray);
-      font-size: 1rem;
+      font-size: 0.9rem;
       margin: 0;
       text-align: center;
     }
@@ -133,6 +223,12 @@
       height: 100%;
       background-color: rgba(0, 0, 0, 0.9);
       overflow: auto;
+      animation: modalopen 0.3s;
+    }
+
+    @keyframes modalopen {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
 
     .modal-content {
@@ -142,46 +238,102 @@
       align-items: center;
       width: 100%;
       height: 100%;
+      padding: 20px;
     }
 
     .modal-img {
-      max-width: 90%;
-      max-height: 90%;
+      max-width: 80%;
+      max-height: 80%;
       object-fit: contain;
+      border: 2px solid white;
+      box-shadow: 0 5px 30px rgba(0,0,0,0.3);
+      border-radius: 5px;
     }
 
     .modal-title {
       color: white;
       font-size: 1.5rem;
-      margin-top: 15px;
+      margin-top: 20px;
+      text-align: center;
     }
 
     .close {
       position: absolute;
-      top: 20px;
-      right: 30px;
+      top: 30px;
+      right: 40px;
       color: white;
       font-size: 35px;
       font-weight: bold;
       cursor: pointer;
+      transition: transform 0.3s;
+    }
+
+    .close:hover {
+      transform: rotate(90deg);
+      color: var(--secondary);
     }
 
     footer {
-      margin-top: 50px;
+      background-color: var(--primary);
+      color: white;
+      padding: 2rem 0;
+      margin-top: 4rem;
       text-align: center;
-      font-size: 0.85rem;
-      color: var(--gray);
-      padding-bottom: 30px;
     }
 
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .social-links a {
+      color: white;
+      font-size: 1.2rem;
+      transition: color 0.3s;
+    }
+
+    .social-links a:hover {
+      color: var(--secondary);
+    }
+
+    footer p {
+      margin: 0.5rem 0;
+    }
+
+    footer a {
+      color: var(--secondary);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    footer a:hover {
+      color: white;
+    }
+
+    /* Responsividade */
     @media (max-width: 900px) {
+      header {
+        flex-direction: column;
+        text-align: center;
+        padding: 2rem 1rem;
+      }
+      header .header-text {
+        flex: 1 1 100%;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+      .header-image {
+        flex: 1 1 100%;
+        max-width: 100%;
+      }
+      .header-image img {
+        transform: scale(1);
+      }
       .dendrograms {
         flex-direction: column;
-        gap: 35px;
-      }
-      body {
-        padding: 15px 20px;
-        max-width: 100%;
+        gap: 25px;
       }
       .dendrogram-card {
         min-width: 100%;
@@ -189,57 +341,111 @@
       .modal-img {
         max-width: 95%;
       }
+      .close {
+        top: 20px;
+        right: 20px;
+        font-size: 30px;
+      }
     }
+
+    @media (max-width: 600px) {
+      header {
+        padding: 2rem 1rem;
+      }
+      header h1 {
+        font-size: 1.8rem;
+      }
+      section.step {
+        padding: 20px;
+      }
+    }
+
+    /* Loading spinner */
+    .spinner {
+      display: none;
+      border: 5px solid rgba(0,0,0,0.1);
+      border-radius: 50%;
+      border-top: 5px solid var(--secondary);
+      width: 50px;
+      height: 50px;
+      animation: spin 1s linear infinite;
+      margin: 20px auto;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
   </style>
 </head>
 <body>
 
   <header>
-    <h1>Clusterização Hierárquica - Maranhão</h1>
-    <p>Análise dos dados de rendimento escolar por tipo de escola e localidade urbana. Parâmetros: matrículas, aprovados, reprovados e abandonos.</p>
-  </header>
-
-  <section class="step">
-    <h2>Passo 1: Carregamento dos Dados</h2>
-    <p>Os dados foram importados de arquivos XLSX divididos em duas pastas: "Anos Iniciais" e "Anos Finais".</p>
-    <p>Foram considerados apenas registros com localização urbana e excluídos os tipos de dependência Total (0) e Pública (5).</p>
-  </section>
-
-  <section class="step">
-    <h2>Passo 2: Pré-processamento e Filtragem</h2>
-    <p>Os dados foram convertidos para tipos numéricos e filtrados para manter somente os tipos de escolas Federal, Estadual, Municipal e Privada.</p>
-    <p>As taxas foram convertidas de strings para floats, garantindo o formato adequado para análise.</p>
-  </section>
-
-  <section class="step">
-    <h2>Passo 3: Clusterização Hierárquica</h2>
-    <p>Os dados foram agregados por tipo de escola, somando matrículas e calculando a média das taxas de aprovação, reprovação e abandono.</p>
-    <p>Foi aplicada a normalização dos dados para evitar vieses e em seguida realizada a clusterização hierárquica usando o método Ward.</p>
-  </section>
-
-  <section class="step">
-    <h2>Resultados - Dendrogramas</h2>
-
-    <div class="dendrograms">
-      <div class="dendrogram-card" onclick="openModal('Anos_Iniciais.png', 'Anos Iniciais')">
-        <img src="Anos_Iniciais.png" alt="Dendrograma Anos Iniciais" />
-        <h3>Anos Iniciais</h3>
-        <p>Fonte: QEDU</p>
-      </div>
-
-      <div class="dendrogram-card" onclick="openModal('Anos_Finais.png', 'Anos Finais')">
-        <img src="Anos_Finais.png" alt="Dendrograma Anos Finais" />
-        <h3>Anos Finais</h3>
-        <p>Fonte: QEDU</p>
-      </div>
-
-      <div class="dendrogram-card" onclick="openModal('Total.png', 'Total (Iniciais + Finais)')">
-        <img src="Total.png" alt="Dendrograma Total" />
-        <h3>Total (Iniciais + Finais)</h3>
-        <p>Fonte: QEDU</p>
+    <div class="header-text">
+      <h1><i class="fas fa-project-diagram"></i> Clusterização Hierárquica - Maranhão</h1>
+      <p class="subtitle">Análise dos dados de rendimento escolar por tipo de escola e localidade urbana</p>
+      <div class="stats">
+        <div class="stat-item">
+          <i class="fas fa-school"></i>
+          <span>4 Tipos de Escolas</span>
+        </div>
+        <div class="stat-item">
+          <i class="fas fa-chart-bar"></i>
+          <span>3 Métricas Analisadas</span>
+        </div>
       </div>
     </div>
-  </section>
+
+    <div class="header-image">
+     <img src="output/Flag_map_of_Maranhao.png" alt="Mapa do Maranhão" class="header-image" />
+
+    </div>
+  </header>
+
+  <main>
+    <section class="step">
+      <h2><i class="fas fa-database"></i> Passo 1: Carregamento dos Dados</h2>
+      <p>Os dados foram importados de arquivos XLSX divididos em duas pastas: "Anos Iniciais" e "Anos Finais".</p>
+      <p>Foram considerados apenas registros com localização urbana e excluídos os tipos de dependência Total (0) e Pública (5).</p>
+    </section>
+
+    <section class="step">
+      <h2><i class="fas fa-filter"></i> Passo 2: Pré-processamento e Filtragem</h2>
+      <p>Os dados foram convertidos para tipos numéricos e filtrados para manter somente os tipos de escolas Federal, Estadual, Municipal e Privada.</p>
+      <p>As taxas foram convertidas de strings para floats, garantindo o formato adequado para análise.</p>
+    </section>
+
+    <section class="step">
+      <h2><i class="fas fa-network-wired"></i> Passo 3: Clusterização Hierárquica</h2>
+      <p>Os dados foram agregados por tipo de escola, somando matrículas e calculando a média das taxas de aprovação, reprovação e abandono.</p>
+      <p>Foi aplicada a normalização dos dados para evitar vieses e em seguida realizada a clusterização hierárquica usando o método Ward.</p>
+    </section>
+
+    <section class="step">
+      <h2><i class="fas fa-chart-line"></i> Resultados - Dendrogramas</h2>
+
+      <div class="dendrograms">
+        <div class="dendrogram-card" onclick="openModal('output/Anos_Iniciais.png', 'Anos Iniciais')">
+          <img src="output/Anos_Iniciais.png" alt="Dendrograma Anos Iniciais" />
+          <h3>Anos Iniciais</h3>
+          <p>Fonte: QEDU</p>
+        </div>
+
+        <div class="dendrogram-card" onclick="openModal('output/Anos_Finais.png', 'Anos Finais')">
+          <img src="output/Anos_Finais.png" alt="Dendrograma Anos Finais" />
+          <h3>Anos Finais</h3>
+          <p>Fonte: QEDU</p>
+        </div>
+
+        <div class="dendrogram-card" onclick="openModal('output/Total.png', 'Total (Iniciais + Finais)')">
+          <img src="output/Total.png" alt="Dendrograma Total" />
+          <h3>Total (Iniciais + Finais)</h3>
+          <p>Fonte: QEDU</p>
+        </div>
+      </div>
+    </section>
+  </main>
 
   <!-- Modal/Lightbox -->
   <div id="myModal" class="modal">
@@ -250,22 +456,51 @@
     </div>
   </div>
 
+  <!-- Loading spinner -->
+  <div id="loading" class="spinner" style="display: none;"></div>
+
   <footer>
-    Desenvolvido por Cicero Gabriel • Dados públicos do Maranhão • <a href="https://qedu.org.br" target="_blank" rel="noopener">QEDU</a>
+    <div class="social-links">
+      <a href="https://github.com/cicerodesousacardoso" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+        <i class="fab fa-github"></i> GitHub
+      </a>
+      <a href="https://www.linkedin.com/in/cicero-gabriel-de-sousa-cardoso-3a86b02b0/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+        <i class="fab fa-linkedin"></i> LinkedIn
+      </a>
+    </div>
+    <div class="footer-info">
+      <p>Desenvolvido por <strong>Cicero Gabriel de Sousa Cardoso</strong></p>
+      <p>Análise de dados educacionais do Maranhão</p>
+    </div>
+    <div class="data-source">
+      <a href="https://qedu.org.br" target="_blank" rel="noopener noreferrer">
+        <i class="fas fa-database"></i> Fonte: QEDU
+      </a>
+    </div>
   </footer>
 
   <script>
-    // Função para abrir o modal
     function openModal(imgSrc, title) {
       const modal = document.getElementById('myModal');
       const modalImg = document.getElementById('modalImage');
       const modalTitle = document.getElementById('modalTitle');
-      
+      const loading = document.getElementById('loading');
+
+      loading.style.display = 'block';
       modal.style.display = "flex";
-      modalImg.src = imgSrc;
       modalTitle.textContent = title;
-      
-      // Fechar modal ao pressionar ESC
+
+      modalImg.src = imgSrc;
+      modalImg.onload = function() {
+        loading.style.display = 'none';
+      }
+      modalImg.onerror = function() {
+        loading.style.display = 'none';
+        console.error('Erro ao carregar a imagem:', imgSrc);
+        modal.style.display = "none";
+        alert('Erro ao carregar a imagem. Verifique o console para detalhes.');
+      }
+
       document.addEventListener('keydown', function(event) {
         if (event.key === 'Escape') {
           closeModal();
@@ -273,12 +508,11 @@
       });
     }
 
-    // Função para fechar o modal
     function closeModal() {
       document.getElementById('myModal').style.display = "none";
+      document.getElementById('loading').style.display = 'none';
     }
 
-    // Fechar modal ao clicar fora da imagem
     window.onclick = function(event) {
       const modal = document.getElementById('myModal');
       if (event.target == modal) {
