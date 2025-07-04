@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Clusterização Hierárquica - Maranhão</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
+
+    :root {
+      --blue: #4e73df;
+      --gray-dark: #5a5c69;
+      --gray: #858796;
+      --white: #fff;
+      --light: #f8f9fc;
+      --font-family-sans-serif: 'Nunito', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background-color: var(--light);
+      font-family: var(--font-family-sans-serif);
+      color: var(--gray-dark);
+      line-height: 1.6;
+      min-height: 100vh;
+      padding: 20px;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    header h1 {
+      font-size: 2.8rem;
+      color: var(--blue);
+      margin-bottom: 0.25rem;
+    }
+
+    header p {
+      font-size: 1.15rem;
+      color: var(--gray);
+      margin-top: 0;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    section.step {
+      background: var(--white);
+      padding: 20px 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgb(78 115 223 / 0.15);
+      margin-bottom: 30px;
+    }
+
+    section.step h2 {
+      color: var(--blue);
+      margin-top: 0;
+      font-size: 1.6rem;
+      margin-bottom: 12px;
+    }
+
+    section.step p {
+      font-size: 1rem;
+      color: var(--gray-dark);
+      margin-bottom: 10px;
+    }
+
+    .dendrograms {
+      display: flex;
+      justify-content: space-between;
+      gap: 30px;
+      flex-wrap: wrap;
+      margin-top: 40px;
+    }
+
+    .dendrogram-card {
+      background: var(--white);
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgb(78 115 223 / 0.15);
+      flex: 1 1 30%;
+      min-width: 350px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .dendrogram-card:hover {
+      transform: scale(1.02);
+    }
+
+    .dendrogram-card img {
+      width: 100%;
+      height: auto;
+      border-radius: 5px;
+      margin-bottom: 15px;
+      box-shadow: 0 2px 6px rgb(0 0 0 / 0.1);
+    }
+
+    .dendrogram-card h3 {
+      margin: 0 0 10px 0;
+      font-size: 1.4rem;
+      color: var(--blue);
+      text-align: center;
+    }
+
+    .dendrogram-card p {
+      color: var(--gray);
+      font-size: 1rem;
+      margin: 0;
+      text-align: center;
+    }
+
+    /* Modal/Lightbox */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.9);
+      overflow: auto;
+    }
+
+    .modal-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+    }
+
+    .modal-img {
+      max-width: 90%;
+      max-height: 90%;
+      object-fit: contain;
+    }
+
+    .modal-title {
+      color: white;
+      font-size: 1.5rem;
+      margin-top: 15px;
+    }
+
+    .close {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      color: white;
+      font-size: 35px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    footer {
+      margin-top: 50px;
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--gray);
+      padding-bottom: 30px;
+    }
+
+    @media (max-width: 900px) {
+      .dendrograms {
+        flex-direction: column;
+        gap: 35px;
+      }
+      body {
+        padding: 15px 20px;
+        max-width: 100%;
+      }
+      .dendrogram-card {
+        min-width: 100%;
+      }
+      .modal-img {
+        max-width: 95%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Clusterização Hierárquica - Maranhão</h1>
+    <p>Análise dos dados de rendimento escolar por tipo de escola e localidade urbana. Parâmetros: matrículas, aprovados, reprovados e abandonos.</p>
+  </header>
+
+  <section class="step">
+    <h2>Passo 1: Carregamento dos Dados</h2>
+    <p>Os dados foram importados de arquivos XLSX divididos em duas pastas: "Anos Iniciais" e "Anos Finais".</p>
+    <p>Foram considerados apenas registros com localização urbana e excluídos os tipos de dependência Total (0) e Pública (5).</p>
+  </section>
+
+  <section class="step">
+    <h2>Passo 2: Pré-processamento e Filtragem</h2>
+    <p>Os dados foram convertidos para tipos numéricos e filtrados para manter somente os tipos de escolas Federal, Estadual, Municipal e Privada.</p>
+    <p>As taxas foram convertidas de strings para floats, garantindo o formato adequado para análise.</p>
+  </section>
+
+  <section class="step">
+    <h2>Passo 3: Clusterização Hierárquica</h2>
+    <p>Os dados foram agregados por tipo de escola, somando matrículas e calculando a média das taxas de aprovação, reprovação e abandono.</p>
+    <p>Foi aplicada a normalização dos dados para evitar vieses e em seguida realizada a clusterização hierárquica usando o método Ward.</p>
+  </section>
+
+  <section class="step">
+    <h2>Resultados - Dendrogramas</h2>
+
+    <div class="dendrograms">
+      <div class="dendrogram-card" onclick="openModal('Anos_Iniciais.png', 'Anos Iniciais')">
+        <img src="Anos_Iniciais.png" alt="Dendrograma Anos Iniciais" />
+        <h3>Anos Iniciais</h3>
+        <p>Fonte: QEDU</p>
+      </div>
+
+      <div class="dendrogram-card" onclick="openModal('Anos_Finais.png', 'Anos Finais')">
+        <img src="Anos_Finais.png" alt="Dendrograma Anos Finais" />
+        <h3>Anos Finais</h3>
+        <p>Fonte: QEDU</p>
+      </div>
+
+      <div class="dendrogram-card" onclick="openModal('Total.png', 'Total (Iniciais + Finais)')">
+        <img src="Total.png" alt="Dendrograma Total" />
+        <h3>Total (Iniciais + Finais)</h3>
+        <p>Fonte: QEDU</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Modal/Lightbox -->
+  <div id="myModal" class="modal">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <div class="modal-content">
+      <img id="modalImage" class="modal-img" src="" alt="">
+      <h3 id="modalTitle" class="modal-title"></h3>
+    </div>
+  </div>
+
+  <footer>
+    Desenvolvido por Cicero Gabriel • Dados públicos do Maranhão • <a href="https://qedu.org.br" target="_blank" rel="noopener">QEDU</a>
+  </footer>
+
+  <script>
+    // Função para abrir o modal
+    function openModal(imgSrc, title) {
+      const modal = document.getElementById('myModal');
+      const modalImg = document.getElementById('modalImage');
+      const modalTitle = document.getElementById('modalTitle');
+      
+      modal.style.display = "flex";
+      modalImg.src = imgSrc;
+      modalTitle.textContent = title;
+      
+      // Fechar modal ao pressionar ESC
+      document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+          closeModal();
+        }
+      });
+    }
+
+    // Função para fechar o modal
+    function closeModal() {
+      document.getElementById('myModal').style.display = "none";
+    }
+
+    // Fechar modal ao clicar fora da imagem
+    window.onclick = function(event) {
+      const modal = document.getElementById('myModal');
+      if (event.target == modal) {
+        closeModal();
+      }
+    }
+  </script>
+
+</body>
+</html>
