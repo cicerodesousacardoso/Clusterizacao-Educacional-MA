@@ -4,8 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Clusterização Hierárquica - Maranhão</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+  />
   <style>
+    /* Fonte e cores */
     @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&display=swap');
 
     :root {
@@ -35,6 +39,7 @@
       margin: 0 auto;
     }
 
+    /* Header */
     header {
       padding: 3rem 2rem;
       background: linear-gradient(135deg, var(--primary), var(--secondary));
@@ -42,15 +47,12 @@
       margin-bottom: 2rem;
       border-radius: 0 0 20px 20px;
       text-align: center;
-      overflow: hidden;
-      position: relative;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 20px;
     }
 
-    /* Texto do header */
     header .header-text {
       flex: 1 1 60%;
       text-align: left;
@@ -60,7 +62,7 @@
       font-size: 2.8rem;
       font-weight: 700;
       margin-bottom: 1rem;
-      text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
     }
 
     header .subtitle {
@@ -69,25 +71,6 @@
       opacity: 0.9;
     }
 
-    header .stats {
-      display: flex;
-      justify-content: flex-start;
-      gap: 2rem;
-      flex-wrap: wrap;
-      margin-top: 1rem;
-    }
-
-    .stat-item {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 0.9rem;
-      background: rgba(255,255,255,0.1);
-      padding: 0.5rem 1rem;
-      border-radius: 20px;
-    }
-
-    /* Imagem Maranhão */
     .header-image {
       flex: 0 0 35%;
       max-width: 350px;
@@ -107,14 +90,14 @@
     }
 
     main {
-      padding: 0 20px;
+      padding: 0 20px 40px 20px;
     }
 
     section.step {
       background: white;
       padding: 25px 30px;
       border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
       margin-bottom: 30px;
       border-left: 4px solid var(--secondary);
       transition: all 0.3s ease;
@@ -122,7 +105,7 @@
 
     section.step:hover {
       transform: translateX(5px);
-      box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
     }
 
     section.step h2 {
@@ -157,7 +140,7 @@
     .dendrogram-card {
       background: white;
       border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
       flex: 1 1 30%;
       min-width: 350px;
       display: flex;
@@ -172,7 +155,7 @@
 
     .dendrogram-card:hover {
       transform: translateY(-5px);
-      box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
     }
 
     .dendrogram-card::after {
@@ -190,7 +173,7 @@
       height: auto;
       border-radius: 5px;
       margin-bottom: 20px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       transition: transform 0.3s;
     }
 
@@ -212,7 +195,7 @@
       text-align: center;
     }
 
-    /* Modal/Lightbox */
+    /* Modal */
     .modal {
       display: none;
       position: fixed;
@@ -224,29 +207,32 @@
       background-color: rgba(0, 0, 0, 0.9);
       overflow: auto;
       animation: modalopen 0.3s;
-    }
-
-    @keyframes modalopen {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    .modal-content {
-      display: flex;
-      flex-direction: column;
       justify-content: center;
       align-items: center;
-      width: 100%;
-      height: 100%;
       padding: 20px;
     }
 
+    @keyframes modalopen {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    .modal-content {
+      max-width: 90%;
+      max-height: 90%;
+      position: relative;
+      text-align: center;
+    }
+
     .modal-img {
-      max-width: 80%;
-      max-height: 80%;
-      object-fit: contain;
+      max-width: 100%;
+      max-height: 80vh;
       border: 2px solid white;
-      box-shadow: 0 5px 30px rgba(0,0,0,0.3);
+      box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
       border-radius: 5px;
     }
 
@@ -254,62 +240,108 @@
       color: white;
       font-size: 1.5rem;
       margin-top: 20px;
-      text-align: center;
     }
 
     .close {
       position: absolute;
-      top: 30px;
-      right: 40px;
+      top: -15px;
+      right: -15px;
       color: white;
       font-size: 35px;
       font-weight: bold;
       cursor: pointer;
+      background: var(--secondary);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      line-height: 40px;
+      user-select: none;
       transition: transform 0.3s;
     }
 
     .close:hover {
       transform: rotate(90deg);
-      color: var(--secondary);
+      background: var(--accent);
     }
 
-    footer {
+    /* Loading spinner */
+    .spinner {
+      border: 5px solid rgba(0, 0, 0, 0.1);
+      border-radius: 50%;
+      border-top: 5px solid var(--secondary);
+      width: 50px;
+      height: 50px;
+      animation: spin 1s linear infinite;
+      margin: 20px auto;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* Tabela */
+    .tabela-dados {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 15px 0;
+      font-size: 0.9rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .tabela-dados th,
+    .tabela-dados td {
+      padding: 12px 15px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .tabela-dados th {
       background-color: var(--primary);
       color: white;
-      padding: 2rem 0;
-      margin-top: 4rem;
-      text-align: center;
+      font-weight: 600;
     }
 
-    .social-links {
+    .tabela-dados tr:nth-child(even) {
+      background-color: #f8f9fa;
+    }
+
+    .tabela-dados tr:hover {
+      background-color: #e9ecef;
+    }
+
+    /* Select */
+    .data-controls {
       display: flex;
-      justify-content: center;
-      gap: 1rem;
-      margin-bottom: 1rem;
+      gap: 1.5rem;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
     }
 
-    .social-links a {
-      color: white;
-      font-size: 1.2rem;
-      transition: color 0.3s;
+    label {
+      font-weight: 600;
+      margin-right: 0.5rem;
     }
 
-    .social-links a:hover {
-      color: var(--secondary);
+    select {
+      padding: 8px 12px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      background-color: white;
+      font-family: var(--font-main);
+      font-size: 0.9rem;
+      cursor: pointer;
     }
 
-    footer p {
-      margin: 0.5rem 0;
-    }
-
-    footer a {
-      color: var(--secondary);
-      text-decoration: none;
-      transition: color 0.3s;
-    }
-
-    footer a:hover {
-      color: white;
+    select:focus {
+      outline: none;
+      border-color: var(--secondary);
+      box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
     }
 
     /* Responsividade */
@@ -319,28 +351,35 @@
         text-align: center;
         padding: 2rem 1rem;
       }
+
       header .header-text {
         flex: 1 1 100%;
         margin-bottom: 20px;
         text-align: center;
       }
+
       .header-image {
         flex: 1 1 100%;
         max-width: 100%;
       }
+
       .header-image img {
         transform: scale(1);
       }
+
       .dendrograms {
         flex-direction: column;
         gap: 25px;
       }
+
       .dendrogram-card {
         min-width: 100%;
       }
+
       .modal-img {
         max-width: 95%;
       }
+
       .close {
         top: 20px;
         right: 20px;
@@ -352,39 +391,26 @@
       header {
         padding: 2rem 1rem;
       }
+
       header h1 {
         font-size: 1.8rem;
       }
+
       section.step {
         padding: 20px;
       }
     }
-
-    /* Loading spinner */
-    .spinner {
-      display: none;
-      border: 5px solid rgba(0,0,0,0.1);
-      border-radius: 50%;
-      border-top: 5px solid var(--secondary);
-      width: 50px;
-      height: 50px;
-      animation: spin 1s linear infinite;
-      margin: 20px auto;
-    }
-
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
   </style>
 </head>
-<body>
 
+<body>
   <header>
     <div class="header-text">
       <h1><i class="fas fa-project-diagram"></i> Clusterização Hierárquica - Maranhão</h1>
-      <p class="subtitle">Análise dos dados de rendimento escolar por tipo de escola e localidade urbana</p>
+      <p class="subtitle">
+        Análise dos dados de rendimento escolar por tipo de escola e
+        localidade urbana
+      </p>
       <div class="stats">
         <div class="stat-item">
           <i class="fas fa-school"></i>
@@ -398,47 +424,120 @@
     </div>
 
     <div class="header-image">
-     <img src="output/Flag_map_of_Maranhao.png" alt="Mapa do Maranhão" class="header-image" />
-
+      <img src="output/Flag_map_of_Maranhao.png" alt="Mapa do Maranhão" />
     </div>
   </header>
 
   <main>
+    <!-- Passo 1: Seleção dos dados -->
     <section class="step">
       <h2><i class="fas fa-database"></i> Passo 1: Carregamento dos Dados</h2>
-      <p>Os dados foram importados de arquivos XLSX divididos em duas pastas: "Anos Iniciais" e "Anos Finais".</p>
-      <p>Foram considerados apenas registros com localização urbana e excluídos os tipos de dependência Total (0) e Pública (5).</p>
+
+      <div class="data-controls">
+        <div>
+          <label for="faseSelect">Fase Escolar:</label>
+          <select id="faseSelect" onchange="carregarDados()">
+            <option value="Anos_Iniciais">Anos Iniciais</option>
+            <option value="Anos_Finais">Anos Finais</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="anoSelect">Ano:</label>
+          <select id="anoSelect" onchange="carregarDados()">
+            <option value="2018">2018</option>
+            <option value="2019">2019</option>
+            <option value="2020">2020</option>
+            <option value="2021">2021</option>
+            <option value="2022">2022</option>
+            <option value="2023">2023</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="tabelaContainer" class="tabela-container">
+        <!-- Tabela carregada aqui -->
+      </div>
     </section>
 
+    <!-- Passo 2: Pré-processamento -->
     <section class="step">
       <h2><i class="fas fa-filter"></i> Passo 2: Pré-processamento e Filtragem</h2>
-      <p>Os dados foram convertidos para tipos numéricos e filtrados para manter somente os tipos de escolas Federal, Estadual, Municipal e Privada.</p>
-      <p>As taxas foram convertidas de strings para floats, garantindo o formato adequado para análise.</p>
+      <p>
+        Os dados foram convertidos para tipos numéricos e filtrados para manter
+        somente os tipos de escolas Federal, Estadual, Municipal e Privada.
+      </p>
+      <p>As taxas foram convertidas de strings para floats, garantindo o formato adequado para análise:</p>
+      <ul>
+        <li><strong>Aprovação:</strong> Taxa de alunos aprovados</li>
+        <li><strong>Reprovação:</strong> Taxa de alunos reprovados</li>
+        <li><strong>Abandono:</strong> Taxa de alunos que abandonaram</li>
+      </ul>
+      <p>
+        Foram removidos registros com valores ausentes ou inconsistentes para
+        garantir a qualidade da análise.
+      </p>
     </section>
 
+    <!-- Passo 3: Clusterização -->
     <section class="step">
       <h2><i class="fas fa-network-wired"></i> Passo 3: Clusterização Hierárquica</h2>
-      <p>Os dados foram agregados por tipo de escola, somando matrículas e calculando a média das taxas de aprovação, reprovação e abandono.</p>
-      <p>Foi aplicada a normalização dos dados para evitar vieses e em seguida realizada a clusterização hierárquica usando o método Ward.</p>
+      <p>
+        Os dados foram agregados por tipo de escola, somando matrículas e
+        calculando a média das taxas de aprovação, reprovação e abandono.
+      </p>
+      <p>
+        Foi aplicada a normalização dos dados para evitar vieses e em seguida
+        realizada a clusterização hierárquica usando o método Ward.
+      </p>
+      <p>
+        O método Ward minimiza a variância total dentro dos clusters, sendo
+        particularmente eficaz para dados educacionais onde queremos maximizar
+        a homogeneidade dentro de cada grupo.
+      </p>
     </section>
 
+    <!-- Passo 4: Resultados -->
     <section class="step">
       <h2><i class="fas fa-chart-line"></i> Resultados - Dendrogramas</h2>
+      <p>
+        Os dendrogramas abaixo mostram a relação hierárquica entre os diferentes
+        tipos de escolas (Federal, Estadual, Municipal e Privada) com base nas
+        taxas de rendimento escolar:
+      </p>
 
       <div class="dendrograms">
-        <div class="dendrogram-card" onclick="openModal('output/Anos_Iniciais.png', 'Anos Iniciais')">
+        <div
+          class="dendrogram-card"
+          onclick="openModal('output/Anos_Iniciais.png', 'Anos Iniciais')"
+          tabindex="0"
+          role="button"
+          aria-label="Abrir dendrograma Anos Iniciais"
+        >
           <img src="output/Anos_Iniciais.png" alt="Dendrograma Anos Iniciais" />
           <h3>Anos Iniciais</h3>
           <p>Fonte: QEDU</p>
         </div>
 
-        <div class="dendrogram-card" onclick="openModal('output/Anos_Finais.png', 'Anos Finais')">
+        <div
+          class="dendrogram-card"
+          onclick="openModal('output/Anos_Finais.png', 'Anos Finais')"
+          tabindex="0"
+          role="button"
+          aria-label="Abrir dendrograma Anos Finais"
+        >
           <img src="output/Anos_Finais.png" alt="Dendrograma Anos Finais" />
           <h3>Anos Finais</h3>
           <p>Fonte: QEDU</p>
         </div>
 
-        <div class="dendrogram-card" onclick="openModal('output/Total.png', 'Total (Iniciais + Finais)')">
+        <div
+          class="dendrogram-card"
+          onclick="openModal('output/Total.png', 'Total (Iniciais + Finais)')"
+          tabindex="0"
+          role="button"
+          aria-label="Abrir dendrograma Total"
+        >
           <img src="output/Total.png" alt="Dendrograma Total" />
           <h3>Total (Iniciais + Finais)</h3>
           <p>Fonte: QEDU</p>
@@ -447,79 +546,159 @@
     </section>
   </main>
 
-  <!-- Modal/Lightbox -->
-  <div id="myModal" class="modal">
-    <span class="close" onclick="closeModal()">&times;</span>
+  <!-- Modal de imagem -->
+  <div id="myModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" tabindex="-1">
     <div class="modal-content">
-      <img id="modalImage" class="modal-img" src="" alt="">
+      <span class="close" onclick="closeModal()" role="button" aria-label="Fechar modal">&times;</span>
+      <img id="modalImage" class="modal-img" src="" alt="" />
       <h3 id="modalTitle" class="modal-title"></h3>
     </div>
   </div>
 
-  <!-- Loading spinner -->
-  <div id="loading" class="spinner" style="display: none;"></div>
-
-  <footer>
-    <div class="social-links">
-      <a href="https://github.com/cicerodesousacardoso" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
-        <i class="fab fa-github"></i> GitHub
-      </a>
-      <a href="https://www.linkedin.com/in/cicero-gabriel-de-sousa-cardoso-3a86b02b0/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-        <i class="fab fa-linkedin"></i> LinkedIn
-      </a>
-    </div>
-    <div class="footer-info">
-      <p>Desenvolvido por <strong>Cicero Gabriel de Sousa Cardoso</strong></p>
-      <p>Análise de dados educacionais do Maranhão</p>
-    </div>
-    <div class="data-source">
-      <a href="https://qedu.org.br" target="_blank" rel="noopener noreferrer">
-        <i class="fas fa-database"></i> Fonte: QEDU
-      </a>
-    </div>
-  </footer>
-
   <script>
-    function openModal(imgSrc, title) {
-      const modal = document.getElementById('myModal');
-      const modalImg = document.getElementById('modalImage');
-      const modalTitle = document.getElementById('modalTitle');
-      const loading = document.getElementById('loading');
+    // Mapas para tradução dos ids para nomes legíveis
+    const tiposEscola = {
+      1: 'Federal',
+      2: 'Estadual',
+      3: 'Municipal',
+      4: 'Privada'
+    };
 
-      loading.style.display = 'block';
-      modal.style.display = "flex";
+    const localizacao = {
+      1: 'Urbana',
+      2: 'Rural'
+    };
+
+async function carregarDados() {
+  const fase = document.getElementById("faseSelect").value; // "Anos_Iniciais" ou "Anos_Finais"
+  const ano = document.getElementById("anoSelect").value;   // ex: "2018"
+  const container = document.getElementById("tabelaContainer");
+
+  container.innerHTML = '<div class="spinner"></div>';
+
+  try {
+    const response = await fetch(`dados/Taxa_de_Rendimento/json/${fase}.json`);
+    if (!response.ok) throw new Error('Arquivo não encontrado');
+
+    const dados = await response.json();
+    const dadosAno = dados[ano];
+
+    if (!dadosAno || dadosAno.length === 0) {
+      container.innerHTML = "<p>Nenhum dado disponível para este ano.</p>";
+      return;
+    }
+
+    // Filtra só os tipos de escola (dependencia_id) 1 a 4
+    const dadosFiltrados = dadosAno.filter(item => [1, 2, 3, 4].includes(item.dependencia_id));
+
+    // Monta tabela
+    let tabelaHTML = `<table class="tabela-dados" aria-live="polite" aria-label="Dados escolares">
+      <thead>
+        <tr>
+          <th>Tipo Escola</th>
+          <th>Localização</th>
+          <th>Matrículas</th>
+          <th>Aprovados (%)</th>
+          <th>Reprovados (%)</th>
+          <th>Abandonos (%)</th>
+        </tr>
+      </thead>
+      <tbody>`;
+
+    dadosFiltrados.forEach(item => {
+      tabelaHTML += `
+        <tr>
+          <td>${tiposEscola[item.dependencia_id] || item.dependencia_id}</td>
+          <td>${localizacao[item.localizacao_id] || item.localizacao_id}</td>
+          <td>${item.matriculas.toLocaleString('pt-BR')}</td>
+          <td>${item.aprovados.toFixed(1)}</td>
+          <td>${item.reprovados.toFixed(1)}</td>
+          <td>${item.abandonos.toFixed(1)}</td>
+        </tr>`;
+    });
+
+    tabelaHTML += `</tbody></table>`;
+
+    container.innerHTML = tabelaHTML;
+  } catch (error) {
+    container.innerHTML = `<p style="color: var(--accent); font-weight: 700;">Erro ao carregar os dados: ${error.message}</p>`;
+    console.error(error);
+  }
+}
+
+
+    document.addEventListener('DOMContentLoaded', () => {
+      carregarDados();
+    });
+
+    // Modal controls
+    const modal = document.getElementById('myModal');
+    const modalImg = document.getElementById('modalImage');
+    const modalTitle = document.getElementById('modalTitle');
+
+    function openModal(src, title) {
+      modal.style.display = 'flex';
+      modalImg.src = src;
+      modalImg.alt = title;
       modalTitle.textContent = title;
-
-      modalImg.src = imgSrc;
-      modalImg.onload = function() {
-        loading.style.display = 'none';
-      }
-      modalImg.onerror = function() {
-        loading.style.display = 'none';
-        console.error('Erro ao carregar a imagem:', imgSrc);
-        modal.style.display = "none";
-        alert('Erro ao carregar a imagem. Verifique o console para detalhes.');
-      }
-
-      document.addEventListener('keydown', function(event) {
-        if (event.key === 'Escape') {
-          closeModal();
-        }
-      });
+      document.body.style.overflow = 'hidden';
+      modal.focus();
     }
 
     function closeModal() {
-      document.getElementById('myModal').style.display = "none";
-      document.getElementById('loading').style.display = 'none';
+      modal.style.display = 'none';
+      modalImg.src = '';
+      modalTitle.textContent = '';
+      document.body.style.overflow = 'auto';
     }
 
-    window.onclick = function(event) {
-      const modal = document.getElementById('myModal');
-      if (event.target == modal) {
+    modal.addEventListener('click', e => {
+      if (e.target === modal || e.target.classList.contains('close')) {
         closeModal();
       }
-    }
-  </script>
+    });
 
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && modal.style.display === 'flex') {
+        closeModal();
+      }
+    });
+  </script>
+  <footer style="text-align: center; padding: 2rem; background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; margin-top: 3rem; border-radius: 20px 20px 0 0;">
+  <div style="display: flex; justify-content: center; gap: 2rem; margin-bottom: 1.5rem; flex-wrap: wrap;">
+    <a href="https://www.linkedin.com/in/cicero-gabriel-de-sousa-cardoso-3a86b02b0/" 
+       target="_blank" 
+       style="color: white; text-decoration: none; transition: all 0.3s; display: flex; align-items: center;"
+       aria-label="Perfil no LinkedIn">
+      <i class="fab fa-linkedin" style="font-size: 1.8rem; margin-right: 8px;"></i>
+      <span>LinkedIn</span>
+    </a>
+    
+    <a href="https://github.com/cicerodesousacardoso" 
+       target="_blank" 
+       style="color: white; text-decoration: none; transition: all 0.3s; display: flex; align-items: center;"
+       aria-label="Perfil no GitHub">
+      <i class="fab fa-github" style="font-size: 1.8rem; margin-right: 8px;"></i>
+      <span>GitHub</span>
+    </a>
+    
+    <a href="https://www.instagram.com/the_cicero/" 
+       target="_blank" 
+       style="color: white; text-decoration: none; transition: all 0.3s; display: flex; align-items: center;"
+       aria-label="Perfil no Instagram">
+      <i class="fab fa-instagram" style="font-size: 1.8rem; margin-right: 8px;"></i>
+      <span>Instagram</span>
+    </a>
+  </div>
+  
+  <div style="margin-top: 1rem;">
+    <p style="opacity: 0.9; font-size: 0.95rem; margin-bottom: 0.5rem;">
+      Desenvolvido por <strong>Cícero Gabriel de Sousa Cardoso</strong>
+    </p>
+    <p style="opacity: 0.7; font-size: 0.85rem; margin: 0;">
+      © 2025 Análise de Dados Educacionais - Maranhão
+    </p>
+  </div>
+</footer>
 </body>
 </html>
