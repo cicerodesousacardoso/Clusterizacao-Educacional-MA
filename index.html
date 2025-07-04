@@ -570,8 +570,8 @@
     };
 
 async function carregarDados() {
-  const fase = document.getElementById("faseSelect").value; // "Anos_Iniciais" ou "Anos_Finais"
-  const ano = document.getElementById("anoSelect").value;   // ex: "2018"
+  const fase = document.getElementById("faseSelect").value;
+  const ano = document.getElementById("anoSelect").value;
   const container = document.getElementById("tabelaContainer");
 
   container.innerHTML = '<div class="spinner"></div>';
@@ -588,11 +588,8 @@ async function carregarDados() {
       return;
     }
 
-    // Filtra só os tipos de escola (dependencia_id) 1 a 4
-    const dadosFiltrados = dadosAno.filter(item => [1, 2, 3, 4].includes(item.dependencia_id));
-
-    // Monta tabela
-    let tabelaHTML = `<table class="tabela-dados" aria-live="polite" aria-label="Dados escolares">
+    // Monta tabela com verificação de valores nulos
+    let tabelaHTML = `<table class="tabela-dados">
       <thead>
         <tr>
           <th>Tipo Escola</th>
@@ -605,27 +602,33 @@ async function carregarDados() {
       </thead>
       <tbody>`;
 
-    dadosFiltrados.forEach(item => {
+    dadosAno.forEach(item => {
+      // Função auxiliar para tratar valores nulos
+      const formatValue = (value) => {
+        if (value === null || value === undefined) return '-';
+        if (typeof value === 'number') return value.toLocaleString('pt-BR');
+        return value;
+      };
+
       tabelaHTML += `
         <tr>
           <td>${tiposEscola[item.dependencia_id] || item.dependencia_id}</td>
           <td>${localizacao[item.localizacao_id] || item.localizacao_id}</td>
-          <td>${item.matriculas.toLocaleString('pt-BR')}</td>
-          <td>${item.aprovados.toFixed(1)}</td>
-          <td>${item.reprovados.toFixed(1)}</td>
-          <td>${item.abandonos.toFixed(1)}</td>
+          <td>${formatValue(item.matriculas)}</td>
+          <td>${formatValue(item.aprovados)}</td>
+          <td>${formatValue(item.reprovados)}</td>
+          <td>${formatValue(item.abandonos)}</td>
         </tr>`;
     });
 
     tabelaHTML += `</tbody></table>`;
-
     container.innerHTML = tabelaHTML;
+
   } catch (error) {
-    container.innerHTML = `<p style="color: var(--accent); font-weight: 700;">Erro ao carregar os dados: ${error.message}</p>`;
-    console.error(error);
+    container.innerHTML = `<p style="color: var(--accent);">Erro ao carregar dados: ${error.message}</p>`;
+    console.error("Detalhes do erro:", error);
   }
 }
-
 
     document.addEventListener('DOMContentLoaded', () => {
       carregarDados();
