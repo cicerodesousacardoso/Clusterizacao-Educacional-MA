@@ -77,9 +77,8 @@ Acesse: http://localhost:8000
 - Tabela dinâmica com indicadores educacionais
 
 ## 👨💻 Autor
-[Cícero Gabriel de Sousa Cardoso](https://github.com/cicerodesousacardoso)  
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/cicero-gabriel-de-sousa-cardoso-3a86b02b0/)
-[![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/cicerodesousacardoso)
+[Cícero Gabriel de Sousa Cardoso](https://github.com/cicerodesousacardoso){:target="_blank" rel="noopener noreferrer"}
 
-## 📄 Licença
-Este projeto está sob a licença MIT - veja o arquivo [LICENSE](LICENSE) para detalhes.
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/cicero-gabriel-de-sousa-cardoso-3a86b02b0/){:target="_blank" rel="noopener noreferrer"}
+
+[![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/cicerodesousacardoso){:target="_blank" rel="noopener noreferrer"}
