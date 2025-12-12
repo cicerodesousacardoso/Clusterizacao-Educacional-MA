@@ -76,9 +76,4 @@ Acesse: http://localhost:8000
 - Visualização de dendrogramas interativos
 - Tabela dinâmica com indicadores educacionais
 
-## 👨💻 Autor
-[Cícero Gabriel de Sousa Cardoso](https://github.com/cicerodesousacardoso){:target="_blank" rel="noopener noreferrer"}
-
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/cicero-gabriel-de-sousa-cardoso-3a86b02b0/){:target="_blank" rel="noopener noreferrer"}
-
-[![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/cicerodesousacardoso){:target="_blank" rel="noopener noreferrer"}
+## 👨💻 Autor [Cícero Gabriel de Sousa Cardoso](https://github.com/cicerodesousacardoso) [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/cicero-gabriel-de-sousa-cardoso-3a86b02b0/) [![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/cicerodesousacardoso)
